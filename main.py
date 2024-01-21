@@ -69,7 +69,7 @@ def rotatePolymer(polymer, coordinate, rotation):
 
     #finner indeksen til monomeren som skal roteres
     rotIndex = np.where(np.all(polymer==np.array(coordinate), axis=1))
-    if len(rotIndex>0):
+    if len(rotIndex)>0:
         rotIndex = rotIndex[0][0]
     else:
         print("NO POLYMER IN GIVEN COORDINATE")
