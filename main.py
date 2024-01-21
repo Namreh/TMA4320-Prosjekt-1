@@ -19,6 +19,7 @@ def showPolymer(polymer):
 
     #lager en tom matrise
     image = np.zeros((N+2,N+2))
+    #fyller inn matrisen med polymeren, index er verdien
     for i in range(N):
         x, y = int(polymer[i][0]), int(polymer[i][1])
         image[y+(N+2)//2][x+1] = i+1
@@ -30,6 +31,7 @@ def showPolymer(polymer):
     padded_image = np.pad(trimmed_image, pad_width=1, mode='constant', constant_values=0.0)
 
 
+    #plot av polymeren
     fig, ax = plt.subplots()
     cmap = plt.get_cmap("Greens")
     cmap.set_under('mistyrose')
@@ -37,9 +39,6 @@ def showPolymer(polymer):
     ax.set_title(f"Polymer, bestående av N={N} monomerer")
     plt.show()
 
-#showPolymer(initalPolymer(10))
-
-testPolymer = [[0,0],[2,2],[2,3]]
 
 #1e – funksjon for validitet
 def validPolymer(polymer, N):
