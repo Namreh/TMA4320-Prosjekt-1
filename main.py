@@ -28,11 +28,11 @@ def showPolymer(polymer):
     fig, ax = plt.subplots()
     cmap = plt.get_cmap("Greens")
     cmap.set_under('mistyrose')
-    ax.imshow(image, cmap=cmap, vmin=1)
+    ax.imshow(image, cmap=cmap, vmin=1,origin='lower')
     ax.set_title(f"Polymer, bestående av N={N} monomerer")
     plt.show()
 
-showPolymer(initalPolymer(10))
+#showPolymer(initalPolymer(10))
 
 testPolymer = [[0,0],[2,2],[2,3]]
 
@@ -59,3 +59,36 @@ def validPolymer(polymer, N):
     return True
 
 print(validPolymer(testPolymer, 3))
+
+#1f – rotasjonsfunksjon
+def rotatePolymer(polymer, coordinate, rotation):
+    N = len(polymer)
+
+    #definerer rotasjonsmatrisen ifht rotation
+    rotMatrix = np.array([[0,-1], [1,0]]) if rotation else np.array([[0,1], [-1,0]])
+
+    #finner indeksen til monomeren som skal roteres
+    rotIndex = np.where(np.all(polymer==np.array(coordinate), axis=1))
+    if len(rotIndex>0):
+        rotIndex = rotIndex[0][0]
+    else:
+        print("NO POLYMER IN GIVEN COORDINATE")
+        
+
+    #deler polymeren i to
+    leftPolymer = polymer[:rotIndex]
+    rightPolymer = polymer[rotIndex:]
+
+    #bestemmer hvilken side som er kortest
+    if rotIndex+1<N/2:
+        #roterer 
+        leftPolymer -= coordinate
+        leftPolymer = leftPolymer@rotMatrix + coordinate
+    else:
+        rightPolymer -= coordinate
+        rightPolymer = rightPolymer@rotMatrix + coordinate
+
+    return np.concatenate((leftPolymer, rightPolymer))
+
+
+showPolymer(rotatePolymer(initalPolymer(100), [45,3], True))
