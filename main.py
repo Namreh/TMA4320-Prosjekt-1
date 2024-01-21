@@ -92,3 +92,4 @@ def rotatePolymer(polymer, coordinate, rotation):
 
 
 showPolymer(rotatePolymer(initalPolymer(100), [45,0], True))
+
