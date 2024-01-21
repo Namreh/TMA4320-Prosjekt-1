@@ -11,7 +11,6 @@ def initalPolymer(N):
         polymer[i][0] = i
     return polymer
 
-print(initalPolymer(5))
 
 #oppgave 1d
 #funksjon for å illustrere polymer
@@ -58,7 +57,6 @@ def validPolymer(polymer, N):
 
     return True
 
-print(validPolymer(testPolymer, 3))
 
 #1f – rotasjonsfunksjon
 def rotatePolymer(polymer, coordinate, rotation):
@@ -91,5 +89,22 @@ def rotatePolymer(polymer, coordinate, rotation):
     return np.concatenate((leftPolymer, rightPolymer))
 
 
-showPolymer(rotatePolymer(initalPolymer(100), [45,0], True))
+showPolymer(rotatePolymer(initalPolymer(15), [9,0], 1))
 
+#1g – funksjon for å rotere en polymer
+def randomRotationSimulation(N, N_s):
+    counter = 1
+    tempPolymer = initalPolymer(N)
+    for i in range(N_s):
+        randIndex = np.random.randint(1,N-1) #inkluderer her ikke endemonomerer
+        rotation = np.random.randint(0,2) #gir boolsk variabel
+        print(f"Roterer på: {randIndex}, i retning: {rotation}")
+        newPolymer = rotatePolymer(tempPolymer, tempPolymer[randIndex], rotation)
+        if validPolymer(newPolymer, N):
+            counter += 1
+            tempPolymer = newPolymer
+    return tempPolymer, counter
+
+test, c = randomRotationSimulation(15, 1)
+print(test)
+showPolymer(test)
