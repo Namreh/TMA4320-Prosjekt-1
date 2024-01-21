@@ -41,7 +41,7 @@ def validPolymer(polymer, N):
     #med vår metode for lagring av polymer, vet vi at det alltid er N monomerer, og at de representeres unikt av indeksene, med mindre det er to monomerer på samme plass
 
     #sjekke at ingen overlapper
-    if len(polymer) != len(np.unique(polymer)):
+    if len(polymer) != len(np.unique(polymer, axis=0)):
         return False
     
     #sjekke nærmeste nabo
@@ -74,8 +74,8 @@ def rotatePolymer(polymer, coordinate, rotation):
         
 
     #deler polymeren i to
-    leftPolymer = polymer[:rotIndex]
-    rightPolymer = polymer[rotIndex:]
+    rightPolymer = np.copy(polymer[rotIndex:])
+    leftPolymer = np.copy(polymer[:rotIndex])
 
     #bestemmer hvilken side som er kortest
     if rotIndex+1<N/2:
@@ -89,7 +89,7 @@ def rotatePolymer(polymer, coordinate, rotation):
     return np.concatenate((leftPolymer, rightPolymer))
 
 
-showPolymer(rotatePolymer(initalPolymer(15), [9,0], 1))
+#showPolymer(rotatePolymer(initalPolymer(15), [11,0],0))
 
 #1g – funksjon for å rotere en polymer
 def randomRotationSimulation(N, N_s):
@@ -97,14 +97,12 @@ def randomRotationSimulation(N, N_s):
     tempPolymer = initalPolymer(N)
     for i in range(N_s):
         randIndex = np.random.randint(1,N-1) #inkluderer her ikke endemonomerer
-        rotation = np.random.randint(0,2) #gir boolsk variabel
-        print(f"Roterer på: {randIndex}, i retning: {rotation}")
-        newPolymer = rotatePolymer(tempPolymer, tempPolymer[randIndex], rotation)
+        rotation = np.random.randint(0,1) #gir boolsk variabel
+        newPolymer = rotatePolymer(np.copy(tempPolymer), tempPolymer[randIndex], rotation)
         if validPolymer(newPolymer, N):
             counter += 1
             tempPolymer = newPolymer
     return tempPolymer, counter
 
-test, c = randomRotationSimulation(15, 1)
-print(test)
+test, c = randomRotationSimulation(100, 1000)
 showPolymer(test)
