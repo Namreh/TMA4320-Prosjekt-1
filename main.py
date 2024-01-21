@@ -13,6 +13,7 @@ def initalPolymer(N):
 
 print(initalPolymer(5))
 
+#oppgave 1d
 #funksjon for å illustrere polymer
 def showPolymer(polymer):
     N = len(polymer)
@@ -32,3 +33,29 @@ def showPolymer(polymer):
     plt.show()
 
 showPolymer(initalPolymer(10))
+
+testPolymer = [[0,0],[2,2],[2,3]]
+
+#1e – funksjon for validitet
+def validPolymer(polymer, N):
+
+    #med vår metode for lagring av polymer, vet vi at det alltid er N monomerer, og at de representeres unikt av indeksene, med mindre det er to monomerer på samme plass
+
+    #sjekke at ingen overlapper
+    if len(polymer) != len(np.unique(polymer)):
+        return False
+    
+    #sjekke nærmeste nabo
+    for i in range(0, N-1):
+        mon = polymer[i]
+        nextMon = polymer[i+1]
+
+        dX = np.abs(mon[0]-nextMon[0])
+        dY = np.abs(mon[1]-nextMon[1])
+
+        if dX+dY != 1:
+            return False
+
+    return True
+
+print(validPolymer(testPolymer, 3))
