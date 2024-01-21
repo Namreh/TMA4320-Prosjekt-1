@@ -26,7 +26,7 @@ def showPolymer(polymer):
     #plot
     fig, ax = plt.subplots()
     cmap = plt.get_cmap("Greens")
-    cmap.set_under('lightgrey')
+    cmap.set_under('lightblue')
     ax.imshow(image, cmap=cmap, vmin=1)
     ax.set_title(f"Polymer, bestående av N={N} monomerer")
     plt.show()
