@@ -109,3 +109,6 @@ def randomRotationSimulation(N, N_s):
     return tempPolymer, counter
 
 # MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
+t, c = randomRotationSimulation(100, 100)
+
+showPolymer(t)
