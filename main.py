@@ -24,13 +24,20 @@ def showPolymer(polymer):
         x, y = int(polymer[i][0]), int(polymer[i][1])
         image[y+(N+2)//2][x+1] = i+1
 
-    #plot
+    #Fjerner de ytterste kolonnene og radene som kun består av 0.0, og legger til en ekstra kant av 0.0
+    non_zero_rows = np.any(image != 0, axis=1)
+    non_zero_columns = np.any(image != 0, axis=0)
+    trimmed_image = image[non_zero_rows][:, non_zero_columns]
+    padded_image = np.pad(trimmed_image, pad_width=1, mode='constant', constant_values=0.0)
+
+
     fig, ax = plt.subplots()
     cmap = plt.get_cmap("Greens")
     cmap.set_under('mistyrose')
-    ax.imshow(image, cmap=cmap, vmin=1,origin='lower')
+    ax.imshow(padded_image, cmap=cmap, vmin=1, origin='lower', resample=True)    
     ax.set_title(f"Polymer, bestående av N={N} monomerer")
     plt.show()
+
 
 #showPolymer(initalPolymer(10))
 
