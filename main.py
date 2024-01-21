@@ -91,4 +91,4 @@ def rotatePolymer(polymer, coordinate, rotation):
     return np.concatenate((leftPolymer, rightPolymer))
 
 
-showPolymer(rotatePolymer(initalPolymer(100), [45,3], True))
+showPolymer(rotatePolymer(initalPolymer(100), [45,0], True))
