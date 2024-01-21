@@ -31,9 +31,6 @@ def showPolymer(polymer):
     ax.set_title(f"Polymer, bestående av N={N} monomerer")
     plt.show()
 
-#showPolymer(initalPolymer(10))
-
-testPolymer = [[0,0],[2,2],[2,3]]
 
 #1e – funksjon for validitet
 def validPolymer(polymer, N):
@@ -89,8 +86,6 @@ def rotatePolymer(polymer, coordinate, rotation):
     return np.concatenate((leftPolymer, rightPolymer))
 
 
-#showPolymer(rotatePolymer(initalPolymer(15), [11,0],0))
-
 #1g – funksjon for å rotere en polymer
 def randomRotationSimulation(N, N_s):
     counter = 1
@@ -104,5 +99,4 @@ def randomRotationSimulation(N, N_s):
             tempPolymer = newPolymer
     return tempPolymer, counter
 
-test, c = randomRotationSimulation(100, 1000)
-showPolymer(test)
+# MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
