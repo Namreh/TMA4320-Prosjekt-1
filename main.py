@@ -11,7 +11,6 @@ def initalPolymer(N):
         polymer[i][0] = i
     return polymer
 
-print(initalPolymer(5))
 
 #oppgave 1d
 #funksjon for å illustrere polymer
@@ -32,9 +31,6 @@ def showPolymer(polymer):
     ax.set_title(f"Polymer, bestående av N={N} monomerer")
     plt.show()
 
-#showPolymer(initalPolymer(10))
-
-testPolymer = [[0,0],[2,2],[2,3]]
 
 #1e – funksjon for validitet
 def validPolymer(polymer, N):
@@ -42,7 +38,7 @@ def validPolymer(polymer, N):
     #med vår metode for lagring av polymer, vet vi at det alltid er N monomerer, og at de representeres unikt av indeksene, med mindre det er to monomerer på samme plass
 
     #sjekke at ingen overlapper
-    if len(polymer) != len(np.unique(polymer)):
+    if len(polymer) != len(np.unique(polymer, axis=0)):
         return False
     
     #sjekke nærmeste nabo
@@ -58,7 +54,6 @@ def validPolymer(polymer, N):
 
     return True
 
-print(validPolymer(testPolymer, 3))
 
 #1f – rotasjonsfunksjon
 def rotatePolymer(polymer, coordinate, rotation):
@@ -76,8 +71,8 @@ def rotatePolymer(polymer, coordinate, rotation):
         
 
     #deler polymeren i to
-    leftPolymer = polymer[:rotIndex]
-    rightPolymer = polymer[rotIndex:]
+    rightPolymer = np.copy(polymer[rotIndex:])
+    leftPolymer = np.copy(polymer[:rotIndex])
 
     #bestemmer hvilken side som er kortest
     if rotIndex+1<N/2:
@@ -91,5 +86,17 @@ def rotatePolymer(polymer, coordinate, rotation):
     return np.concatenate((leftPolymer, rightPolymer))
 
 
-showPolymer(rotatePolymer(initalPolymer(100), [45,0], True))
+#1g – funksjon for å rotere en polymer
+def randomRotationSimulation(N, N_s):
+    counter = 1
+    tempPolymer = initalPolymer(N)
+    for i in range(N_s):
+        randIndex = np.random.randint(1,N-1) #inkluderer her ikke endemonomerer
+        rotation = np.random.randint(0,1) #gir boolsk variabel
+        newPolymer = rotatePolymer(np.copy(tempPolymer), tempPolymer[randIndex], rotation)
+        if validPolymer(newPolymer, N):
+            counter += 1
+            tempPolymer = newPolymer
+    return tempPolymer, counter
 
+# MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
