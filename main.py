@@ -119,13 +119,16 @@ def polymerEnergy(polymer, V):
     dx = np.abs(xi-xi[:, np.newaxis])
     dy = np.abs(yi-yi[:, np.newaxis])
 
+    #lager masken som viser til naboer
     mask = ((dx == 1) & (dy == 0)) | ((dx == 0) & (dy == 1))
 
-    vvMatrix = V[mask]
+    #fjerner ikke-naboer fra V-matrisen – antar at linkede monomerer har 0 i energi i V
+    vvMatrix = V[mask] 
 
+    #summerer den gjenværende energien, deler på 2 ifht energiformel
     return 0.5*np.sum(vvMatrix)
     
-    
+#matrise for å teste
 testV = np.array([[0,0,-1,-1,-1],
          [0,0,0,-1,-1],
          [-1,0,0,0,-1],
