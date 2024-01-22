@@ -108,6 +108,31 @@ def randomRotationSimulation(N, N_s):
     return tempPolymer, counter
 
 # MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
-t, c = randomRotationSimulation(100, 100)
+t, c = randomRotationSimulation(5, 100)
 
 showPolymer(t)
+
+#oppgave 1j – funksjon for å beregne energien i polymer
+def polymerEnergy(polymer, V):
+    xi, yi = polymer.T #deler opp polymeren i x og y
+
+    dx = np.abs(xi-xi[:, np.newaxis])
+    dy = np.abs(yi-yi[:, np.newaxis])
+
+    #lager masken som viser til naboer
+    mask = ((dx == 1) & (dy == 0)) | ((dx == 0) & (dy == 1))
+
+    #fjerner ikke-naboer fra V-matrisen – antar at linkede monomerer har 0 i energi i V
+    vvMatrix = V[mask] 
+
+    #summerer den gjenværende energien, deler på 2 ifht energiformel
+    return 0.5*np.sum(vvMatrix)
+    
+#matrise for å teste
+testV = np.array([[0,0,-1,-1,-1],
+         [0,0,0,-1,-1],
+         [-1,0,0,0,-1],
+         [-1,-1,0,0,0],
+         [-1,-1,-1,0,0]])
+
+print(polymerEnergy(t, testV))
