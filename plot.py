@@ -14,4 +14,4 @@ def allowedRotOfN(N_s, start, stop):
     plt.show()
 
 #kjør denne for å vise oppg 1i
-#allowedRotOfN(1000, 10, 1000)
+allowedRotOfN(100, 10, 1000)

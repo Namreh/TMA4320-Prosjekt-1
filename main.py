@@ -32,7 +32,7 @@ def showPolymer(polymer):
 
     fig, ax = plt.subplots()
     cmap = plt.get_cmap("Greens")
-    cmap.set_under('mistyrose')
+    cmap.set_under('black')
     ax.imshow(padded_image, cmap=cmap, vmin=1, origin='lower', resample=True)    
     ax.set_title(f"Polymer, bestående av N={N} monomerer")
     plt.show()
@@ -109,6 +109,6 @@ def randomRotationSimulation(N, N_s):
     return tempPolymer, counter
 
 # MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
-t, c = randomRotationSimulation(100, 100)
+t, c = randomRotationSimulation(250, 11500)
 
 showPolymer(t)
