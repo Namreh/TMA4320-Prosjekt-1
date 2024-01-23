@@ -19,6 +19,7 @@ def showPolymer(polymer):
 
     #lager en tom matrise
     image = np.zeros((N+2,N+2))
+    #fyller inn matrisen med polymeren, index er verdien
     for i in range(N):
         x, y = int(polymer[i][0]), int(polymer[i][1])
         image[y+(N+2)//2][x+1] = i+1
@@ -30,6 +31,7 @@ def showPolymer(polymer):
     padded_image = np.pad(trimmed_image, pad_width=1, mode='constant', constant_values=0.0)
 
 
+    #plot av polymeren
     fig, ax = plt.subplots()
     cmap = plt.get_cmap("Greens")
     cmap.set_under('black')
@@ -37,9 +39,6 @@ def showPolymer(polymer):
     ax.set_title(f"Polymer, bestående av N={N} monomerer")
     plt.show()
 
-#showPolymer(initalPolymer(10))
-
-testPolymer = [[0,0],[2,2],[2,3]]
 
 #1e – funksjon for validitet
 def validPolymer(polymer, N):
@@ -109,6 +108,31 @@ def randomRotationSimulation(N, N_s):
     return tempPolymer, counter
 
 # MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
-t, c = randomRotationSimulation(250, 11500)
+t, c = randomRotationSimulation(100, 100)
 
 showPolymer(t)
+
+#oppgave 1j – funksjon for å beregne energien i polymer
+def polymerEnergy(polymer, V):
+    xi, yi = polymer.T #deler opp polymeren i x og y
+
+    dx = np.abs(xi-xi[:, np.newaxis])
+    dy = np.abs(yi-yi[:, np.newaxis])
+
+    #lager masken som viser til naboer
+    mask = ((dx == 1) & (dy == 0)) | ((dx == 0) & (dy == 1))
+
+    #fjerner ikke-naboer fra V-matrisen – antar at linkede monomerer har 0 i energi i V
+    vvMatrix = V[mask] 
+
+    #summerer den gjenværende energien, deler på 2 ifht energiformel
+    return 0.5*np.sum(vvMatrix)
+    
+#matrise for å teste
+testV = np.array([[0,0,-1,-1,-1],
+         [0,0,0,-1,-1],
+         [-1,0,0,0,-1],
+         [-1,-1,0,0,0],
+         [-1,-1,-1,0,0]])
+
+print(polymerEnergy(t, testV))
