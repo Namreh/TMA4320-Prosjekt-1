@@ -115,7 +115,7 @@ def randomRotationSimulation(N, N_s):
 # MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
 t, c = randomRotationSimulation(5, 100)
 
-showPolymer(t)
+#showPolymer(t)
 
 #oppgave 1j – funksjon for å beregne energien i polymer
 def polymerEnergy(polymer, V):
@@ -133,13 +133,6 @@ def polymerEnergy(polymer, V):
     #summerer den gjenværende energien, deler på 2 ifht energiformel
     return 0.5*np.sum(vvMatrix)
     
-#matrise for å teste ut energifunksjonen
-testV = np.array([[0,0,-1,-1,-1],
-         [0,0,0,-1,-1],
-         [-1,0,0,0,-1],
-         [-1,-1,0,0,0],
-         [-1,-1,-1,0,0]])
-
 
 #funksjon for å lage standard V array av vilkårlig størrelse
 def createVarray(N, value):
@@ -175,3 +168,4 @@ def metropolisSimulation(polymer, N_s, V, T):
             E_array[i] = E
 
     return tempPolymer, E_array
+
