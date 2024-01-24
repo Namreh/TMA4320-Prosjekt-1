@@ -174,3 +174,13 @@ def metropolisSimulation(polymer, N_s, V, T):
 
 #kode for å kjøre metrolpolis simulering
 #metropoly, energy_array = metropolisSimulation(initalPolymer(100), 5000, createVarray(100, -4.0*10**(-21)), 1000)
+
+def calculateDiameter(polymer):
+    xi, yi = polymer.T #deler opp polymeren i x og y
+
+    dx = np.abs(xi-xi[:, np.newaxis])
+    dy = np.abs(yi-yi[:, np.newaxis])
+
+    dPosition = np.sqrt(dx**2+dy**2)
+
+    return np.max(dPosition)
