@@ -108,7 +108,7 @@ def randomRotationSimulation(N, N_s):
     return tempPolymer, counter
 
 # MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
-t, c = randomRotationSimulation(100, 100)
+t, c = randomRotationSimulation(5, 100)
 
 showPolymer(t)
 
@@ -128,11 +128,9 @@ def polymerEnergy(polymer, V):
     #summerer den gjenværende energien, deler på 2 ifht energiformel
     return 0.5*np.sum(vvMatrix)
     
-#matrise for å teste
+#matrise for å teste ut energifunksjonen
 testV = np.array([[0,0,-1,-1,-1],
          [0,0,0,-1,-1],
          [-1,0,0,0,-1],
          [-1,-1,0,0,0],
          [-1,-1,-1,0,0]])
-
-print(polymerEnergy(t, testV))
