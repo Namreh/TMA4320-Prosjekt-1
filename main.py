@@ -1,6 +1,11 @@
 #importerer bibliotek
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy as sp #for konstanter
+
+#regne ut beta for boltzmannstatistikken
+def beta(T):
+    return 1/(sp.k*T)
 
 ##oppgave 1a-1b
 
@@ -109,9 +114,9 @@ def randomRotationSimulation(N, N_s):
     return tempPolymer, counter
 
 # MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
-t, c = randomRotationSimulation(100, 100)
+t, c = randomRotationSimulation(5, 100)
 
-showPolymer(t)
+#showPolymer(t)
 
 #oppgave 1j – funksjon for å beregne energien i polymer
 def polymerEnergy(polymer, V):
@@ -129,11 +134,39 @@ def polymerEnergy(polymer, V):
     #summerer den gjenværende energien, deler på 2 ifht energiformel
     return 0.5*np.sum(vvMatrix)
     
-#matrise for å teste
-testV = np.array([[0,0,-1,-1,-1],
-         [0,0,0,-1,-1],
-         [-1,0,0,0,-1],
-         [-1,-1,0,0,0],
-         [-1,-1,-1,0,0]])
 
-print(polymerEnergy(t, testV))
+#funksjon for å lage standard V array av vilkårlig størrelse
+def createVarray(N, value):
+    tempV = np.zeros((N,N))
+    for i in range(N):
+        for j in range(N):
+            if not ((i == j) or np.abs((i-j)) == 1):
+                tempV[i,j] = value
+
+    return tempV
+
+#oppgave 2a) Metropolisalgoritme, algoritme 2
+def metropolisSimulation(polymer, N_s, V, T):
+    N = len(polymer)
+    tempPolymer = np.copy(polymer)
+
+    E_array = np.zeros(N_s)
+    E = polymerEnergy(polymer, V)
+    i = 1
+    while i < N_s:
+        randIndex = np.random.randint(1,N-1) #inkluderer her ikke endemonomerer
+        rotation = np.random.randint(0,1) #gir boolsk variabel
+        newPolymer = rotatePolymer(np.copy(tempPolymer), tempPolymer[randIndex], rotation)
+        if validPolymer(newPolymer, N):
+            i += 1
+            E_new = polymerEnergy(newPolymer, V)
+            if E_new < E:
+                tempPolymer = newPolymer
+                E = E_new
+            elif np.random.uniform() < np.exp(-beta(T)*(E_new-E)):
+                tempPolymer = newPolymer
+                E = E_new
+            E_array[i] = E
+
+    return tempPolymer, E_array
+
