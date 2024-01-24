@@ -141,6 +141,16 @@ testV = np.array([[0,0,-1,-1,-1],
          [-1,-1,-1,0,0]])
 
 
+#funksjon for å lage standard V array av vilkårlig størrelse
+def createVarray(N, value):
+    tempV = np.zeros((N,N))
+    for i in range(N):
+        for j in range(N):
+            if not ((i == j) or np.abs((i-j)) == 1):
+                tempV[i,j] = value
+
+    return tempV
+
 #oppgave 2a) Metropolisalgoritme, algoritme 2
 def metropolisSimulation(polymer, N_s, V, T):
     N = len(polymer)
