@@ -39,7 +39,7 @@ def showPolymer(polymer):
     #plot av polymeren
     fig, ax = plt.subplots()
     cmap = plt.get_cmap("Greens")
-    cmap.set_under('black')
+    cmap.set_under('mistyrose')
     figur = ax.imshow(padded_image, cmap=cmap, vmin=1, origin='lower', resample=True)    
     ax.set_title(f"Polymer, bestående av N={N} monomerer")
     fig.colorbar(figur)
@@ -172,6 +172,5 @@ def metropolisSimulation(polymer, N_s, V, T):
 
     return tempPolymer, E_array
 
-metropoly, energy_array = metropolisSimulation(initalPolymer(35), 5000, createVarray(35, -4.0*10**(-21)), 75)
-
-showPolymer(metropoly)
+#kode for å kjøre metrolpolis simulering
+#metropoly, energy_array = metropolisSimulation(initalPolymer(100), 5000, createVarray(100, -4.0*10**(-21)), 1000)
