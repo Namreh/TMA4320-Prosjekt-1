@@ -1,7 +1,7 @@
 #importerer bibliotek
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy as sp #for konstanter
+from scipy import constants as sp #for konstanter
 
 #regne ut beta for boltzmannstatistikken
 def beta(T):
@@ -105,7 +105,7 @@ def randomRotationSimulation(N, N_s):
     tempPolymer = initalPolymer(N)
     for i in range(N_s):
         randIndex = np.random.randint(1,N-1) #inkluderer her ikke endemonomerer
-        rotation = np.random.randint(0,1) #gir boolsk variabel
+        rotation = np.random.randint(0,2) #gir boolsk variabel
         newPolymer = rotatePolymer(np.copy(tempPolymer), tempPolymer[randIndex], rotation)
         if validPolymer(newPolymer, N):
             counter += 1
@@ -151,11 +151,13 @@ def metropolisSimulation(polymer, N_s, V, T):
 
     E_array = np.zeros(N_s)
     E = polymerEnergy(polymer, V)
+    E_array[0] = E
     i = 1
     while i < N_s:
         randIndex = np.random.randint(1,N-1) #inkluderer her ikke endemonomerer
-        rotation = np.random.randint(0,1) #gir boolsk variabel
+        rotation = np.random.randint(0,2) #gir boolsk variabel
         newPolymer = rotatePolymer(np.copy(tempPolymer), tempPolymer[randIndex], rotation)
+
         if validPolymer(newPolymer, N):
             i += 1
             E_new = polymerEnergy(newPolymer, V)
@@ -165,7 +167,10 @@ def metropolisSimulation(polymer, N_s, V, T):
             elif np.random.uniform() < np.exp(-beta(T)*(E_new-E)):
                 tempPolymer = newPolymer
                 E = E_new
-            E_array[i] = E
+            E_array[i-1] = E
 
     return tempPolymer, E_array
 
+metropoly, energy_array = metropolisSimulation(initalPolymer(35), 5000, createVarray(35, -4.0*10**(-21)), 75)
+
+showPolymer(metropoly)
