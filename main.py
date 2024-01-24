@@ -35,8 +35,9 @@ def showPolymer(polymer):
     fig, ax = plt.subplots()
     cmap = plt.get_cmap("Greens")
     cmap.set_under('black')
-    ax.imshow(padded_image, cmap=cmap, vmin=1, origin='lower', resample=True)    
+    figur = ax.imshow(padded_image, cmap=cmap, vmin=1, origin='lower', resample=True)    
     ax.set_title(f"Polymer, bestående av N={N} monomerer")
+    fig.colorbar(figur)
     plt.show()
 
 
