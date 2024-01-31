@@ -145,6 +145,15 @@ def createVarray(N, value):
 
     return tempV
 
+#funksjon for å lage standard V array med tilfeldige størrelser
+def createRandomVarray(N, start, stop):
+    tempV = np.zeros((N,N))
+    for i in range(N):
+        for j in range(N):
+            if not ((i==j) or np.abs((i-j)) == 1):
+                tempV[i,j] = np.random.uniform(start, stop)
+
+
 #oppgave 2a) Metropolisalgoritme, algoritme 2
 def metropolisSimulation(polymer, N_s, V, T):
     N = len(polymer)
