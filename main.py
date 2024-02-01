@@ -139,20 +139,20 @@ def polymerEnergy(polymer, V):
 #funksjon for å lage standard V array av vilkårlig størrelse
 def createVarray(N, value):
     tempV = np.zeros((N,N))
-    for i in range(N):
-        for j in range(N):
-            if not ((i == j) or np.abs((i-j)) == 1):
-                tempV[i,j] = value
+    for i in range(2, N):
+        for j in range(0, i-2):
+            tempV[i,j] = value
+            tempV[j,i] = value
 
     return tempV
 
 #funksjon for å lage standard V array med tilfeldige størrelser
 def createRandomVarray(N, start, stop):
     tempV = np.zeros((N,N))
-    for i in range(N):
-        for j in range(N):
-            if not ((i==j) or np.abs((i-j)) == 1):
-                tempV[i,j] = np.random.uniform(start, stop)
+    for i in range(2, N):
+        for j in range(0, i-2):
+            tempV[i,j] = np.random.uniform(start, stop)
+            tempV[j,i] = tempV[i,j]
 
 
 #oppgave 2a) Metropolisalgoritme, algoritme 2
