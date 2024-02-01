@@ -150,8 +150,8 @@ def createVarray(N, value):
 
 #funksjon for å lage standard V array med tilfeldige størrelser
 def createRandomVarray(N, start, stop):
-    tempV = np.triu(np.random.uniform(start, stop, size=(N, N)), k=2)
-    tempV = tempV + tempV.T
+    tempV = np.triu(np.random.uniform(start, stop, size=(N, N)), k=2) #Simulerer øvre triangulær forskjøvet med 2
+    tempV = tempV + tempV.T #Speiler øvre triangulær for å få en symetrisk matrise
     return tempV
 
 #oppgave 2a) Metropolisalgoritme, algoritme 2
