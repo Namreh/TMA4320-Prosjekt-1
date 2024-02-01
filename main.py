@@ -38,7 +38,7 @@ def showPolymer(polymer):
 
     #plot av polymeren
     fig, ax = plt.subplots()
-    cmap = plt.get_cmap("Greens")
+    cmap = plt.get_cmap("Greens").copy()
     cmap.set_under('mistyrose')
     figur = ax.imshow(padded_image, cmap=cmap, vmin=1, origin='lower', resample=True)    
     ax.set_title(f"Polymer, bestående av N={N} monomerer")
