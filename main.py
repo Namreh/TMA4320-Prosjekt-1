@@ -2,6 +2,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import constants as sp #for konstanter
+import time     #For å ta tiden på koden
+
 
 #regne ut beta for boltzmannstatistikken
 def beta(T):
@@ -116,7 +118,7 @@ def randomRotationSimulation(N, N_s):
 # MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
 t, c = randomRotationSimulation(200, 100000)
 
-showPolymer(t)
+#showPolymer(t)
 
 
 #oppgave 1j – funksjon for å beregne energien i polymer
@@ -208,6 +210,7 @@ def metropolisSimulationWithDiameter(polymer, N_s, V, T):
     d = calculateDiameter(tempPolymer)
     d_array[0] = d
 
+    start_time = time.time()
 
     i = 1
     while i < N_s:
@@ -226,5 +229,10 @@ def metropolisSimulationWithDiameter(polymer, N_s, V, T):
                 E = E_new
             d_array[i-1] = calculateDiameter(tempPolymer)
             E_array[i-1] = E
+
+    end_time = time.time() 
+    elapsed_time = end_time - start_time
+
+    print(f"Elapsed Time: {elapsed_time} seconds")
 
     return tempPolymer, E_array
