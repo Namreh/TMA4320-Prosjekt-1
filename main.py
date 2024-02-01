@@ -114,9 +114,10 @@ def randomRotationSimulation(N, N_s):
     return tempPolymer, counter
 
 # MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
-t, c = randomRotationSimulation(5, 100)
+t, c = randomRotationSimulation(200, 100000)
 
-#showPolymer(t)
+showPolymer(t)
+
 
 #oppgave 1j – funksjon for å beregne energien i polymer
 def polymerEnergy(polymer, V):
