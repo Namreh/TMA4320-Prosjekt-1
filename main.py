@@ -140,12 +140,9 @@ def polymerEnergy(polymer, V):
 
 #funksjon for å lage standard V array av vilkårlig størrelse
 def createVarray(N, value):
-    tempV = np.zeros((N,N))
-    for i in range(2, N):
-        for j in range(0, i-2):
-            tempV[i,j] = value
-            tempV[j,i] = value
-
+    tempV = np.full((N, N), value)
+    np.fill_diagonal(tempV[:-2, 2:], 0)
+    np.fill_diagonal(tempV[2:, :-2], 0)
     return tempV
 
 #funksjon for å lage standard V array med tilfeldige størrelser
