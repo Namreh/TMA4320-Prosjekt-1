@@ -43,8 +43,11 @@ def oppgave2g():
     e_array = np.zeros(length)
     deviation_array = np.zeros(length)
 
+    #lager tilfeldig v_array
+    V_array = m.createRandomVarray(N, -6*10**-21, -2*10**-21)
+
     for i in range(length):
-        _, energy_array = m.metropolisSimulation(m.initalPolymer(N), N_s, m.createVarray(N, -4.0*10**(-21)), t_array[i])
+        _, energy_array = m.metropolisSimulation(m.initalPolymer(N), N_s, V_array, t_array[i])
         e_array[i] = np.mean(energy_array[1000:])
         deviation_array[i] = np.std(energy_array[1000:])
     

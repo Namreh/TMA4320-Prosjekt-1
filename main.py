@@ -233,6 +233,5 @@ def metropolisSimulationWithDiameter(polymer, N_s, V, T):
     end_time = time.time() 
     elapsed_time = end_time - start_time
 
-    print(f"Elapsed Time: {elapsed_time} seconds")
 
-    return tempPolymer, E_array
+    return tempPolymer, E_array, d_array, elapsed_time
