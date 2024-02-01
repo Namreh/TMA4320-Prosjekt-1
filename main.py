@@ -116,7 +116,7 @@ def randomRotationSimulation(N, N_s):
     return tempPolymer, counter
 
 # MANGLER LAGRING OG SAMMENLIGNING AV TO POLYMERER
-t, c = randomRotationSimulation(200, 100000)
+#t, c = randomRotationSimulation(200, 100000)
 
 #showPolymer(t)
 
@@ -150,12 +150,9 @@ def createVarray(N, value):
 
 #funksjon for å lage standard V array med tilfeldige størrelser
 def createRandomVarray(N, start, stop):
-    tempV = np.zeros((N,N))
-    for i in range(2, N):
-        for j in range(0, i-2):
-            tempV[i,j] = np.random.uniform(start, stop)
-            tempV[j,i] = tempV[i,j]
-
+    tempV = np.triu(np.random.uniform(start, stop, size=(N, N)), k=2)
+    tempV = tempV + tempV.T
+    return tempV
 
 #oppgave 2a) Metropolisalgoritme, algoritme 2
 def metropolisSimulation(polymer, N_s, V, T):
