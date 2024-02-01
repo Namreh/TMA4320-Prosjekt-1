@@ -146,6 +146,15 @@ def createVarray(N, value):
 
     return tempV
 
+#funksjon for å lage standard V array med tilfeldige størrelser
+def createRandomVarray(N, start, stop):
+    tempV = np.zeros((N,N))
+    for i in range(N):
+        for j in range(N):
+            if not ((i==j) or np.abs((i-j)) == 1):
+                tempV[i,j] = np.random.uniform(start, stop)
+
+
 #oppgave 2a) Metropolisalgoritme, algoritme 2
 def metropolisSimulation(polymer, N_s, V, T):
     N = len(polymer)
@@ -185,3 +194,37 @@ def calculateDiameter(polymer):
     dPosition = np.sqrt(dx**2+dy**2)
 
     return np.max(dPosition)
+
+
+def metropolisSimulationWithDiameter(polymer, N_s, V, T):
+    N = len(polymer)
+    tempPolymer = np.copy(polymer)
+
+    E_array = np.zeros(N_s)
+    E = polymerEnergy(polymer, V)
+    E_array[0] = E
+
+    d_array = np.zeros(N_s)
+    d = calculateDiameter(tempPolymer)
+    d_array[0] = d
+
+
+    i = 1
+    while i < N_s:
+        randIndex = np.random.randint(1,N-1) #inkluderer her ikke endemonomerer
+        rotation = np.random.randint(0,2) #gir boolsk variabel
+        newPolymer = rotatePolymer(np.copy(tempPolymer), tempPolymer[randIndex], rotation)
+
+        if validPolymer(newPolymer, N):
+            i += 1
+            E_new = polymerEnergy(newPolymer, V)
+            if E_new < E:
+                tempPolymer = newPolymer
+                E = E_new
+            elif np.random.uniform() < np.exp(-beta(T)*(E_new-E)):
+                tempPolymer = newPolymer
+                E = E_new
+            d_array[i-1] = calculateDiameter(tempPolymer)
+            E_array[i-1] = E
+
+    return tempPolymer, E_array
